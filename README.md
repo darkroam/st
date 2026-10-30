@@ -24,7 +24,7 @@ features that make it literally the best terminal emulator ever:
 + Compatibility with `Xresources` and `pywal` for dynamic colors.
 + Default [gruvbox](https://github.com/morhetz/gruvbox) colors otherwise.
 + Transparency/alpha, which is also adjustable from your `Xresources`.
-+ Default font is system "mono" at 14pt, meaning the font will match your
++ Default font is system "mono" at 12px, meaning the font will match your
   system font.
 
 ## Other st patches
