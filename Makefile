@@ -28,6 +28,12 @@ $(OBJ): config.h config.mk
 st: $(OBJ)
 	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
 
+test: st
+	@status=0; output=$$(./st -v 2>&1) || status=$$?; \
+	if test $$status -ne 1 || test "$$output" != "./st $(VERSION)"; then \
+		printf '%s\n' "$$output" >&2; exit 1; \
+	fi
+
 clean:
 	rm -f st $(OBJ) st-$(VERSION).tar.gz *.rej *.orig *.o
 
@@ -67,4 +73,4 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-bs
 	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-bs-256color
 
-.PHONY: all options clean dist install uninstall
+.PHONY: all options clean dist install uninstall test
