@@ -50,7 +50,8 @@ install: st
 	mkdir -p $(DESTDIR)$(MANPREFIX)/man1
 	sed "s/VERSION/$(VERSION)/g" < st.1 > $(DESTDIR)$(MANPREFIX)/man1/st.1
 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/st.1
-	tic -sx st.info
+	mkdir -p $(DESTDIR)$(PREFIX)/share/terminfo
+	tic -sx -o $(DESTDIR)$(PREFIX)/share/terminfo st.info
 	@echo Please see the README file regarding the terminfo entry of st.
 
 uninstall:
@@ -58,5 +59,12 @@ uninstall:
 	rm -f $(DESTDIR)$(PREFIX)/bin/st-copyout
 	rm -f $(DESTDIR)$(PREFIX)/bin/st-urlhandler
 	rm -f $(DESTDIR)$(MANPREFIX)/man1/st.1
+	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-mono
+	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st
+	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-256color
+	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-meta
+	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-meta-256color
+	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-bs
+	rm -f $(DESTDIR)$(PREFIX)/share/terminfo/s/st-bs-256color
 
 .PHONY: all options clean dist install uninstall

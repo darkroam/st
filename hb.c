@@ -56,7 +56,10 @@ hbfindfont(XftFont *match)
 	}
 
 	/* Font not found in cache, caching it now. */
-	hbfontcache = realloc(hbfontcache, sizeof(HbFontMatch) * (hbfontslen + 1));
+	HbFontMatch *newcache = realloc(hbfontcache, sizeof(HbFontMatch) * (hbfontslen + 1));
+	if (newcache == NULL)
+		die("Failed to allocate Harfbuzz font cache.");
+	hbfontcache = newcache;
 	FT_Face face = XftLockFace(match);
 	hb_font_t *font = hb_ft_font_create(face, NULL);
 	if (font == NULL)
@@ -74,6 +77,8 @@ hbtransform(XftGlyphFontSpec *specs, const Glyph *glyphs, size_t len, int x, int
 {
 	int start = 0, length = 1, gstart = 0;
 	hb_codepoint_t *codepoints = calloc((unsigned int)len, sizeof(hb_codepoint_t));
+	if (codepoints == NULL)
+		die("Failed to allocate Harfbuzz codepoints.");
 
 	for (int idx = 1, specidx = 1; idx < len; idx++) {
 		if (glyphs[idx].mode & ATTR_WDUMMY) {
